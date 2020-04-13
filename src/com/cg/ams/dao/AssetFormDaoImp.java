@@ -26,7 +26,7 @@ public class AssetFormDaoImp implements AssetFormDao {
 		logger.info("Asset Read Successfully");
 		return new ArrayList<AssetForm>(result);
 	}
-	
+	@Override
 	public boolean update(AssetForm form)throws UpdateFailedException{
 		AssetForm result=forms.putIfAbsent(form.getRequestId(), form);
 		if(result != null) {
@@ -40,6 +40,18 @@ public class AssetFormDaoImp implements AssetFormDao {
 	    }
 	    
 	}
+	@Override
+	public boolean createAssetForm(AssetForm a) {
+		AssetForm result=forms.putIfAbsent(a.getRequestId(), a);
+	    if(result == null) {
+	    	return true;
+	    }
+	    else {
+			return false;
+		}
+	}
+	
+	@Override
 	public String checkStatusDao(String assetRequestId){
 		AssetForm a = forms.get(assetRequestId);
 		System.out.println(forms);
@@ -54,6 +66,7 @@ public class AssetFormDaoImp implements AssetFormDao {
 		
 	}
 	
+	@Override
 	public void changeStatusDao(int assetRequestId){
 		AssetForm a = forms.get(assetRequestId);
 		if(a != null) {
@@ -65,6 +78,7 @@ public class AssetFormDaoImp implements AssetFormDao {
 			}
 	}
 	
+	@Override
 	public boolean requestDeclineDao(int assetRequestId) {
 		AssetForm a = forms.get(assetRequestId);
 		if(a != null) {
@@ -77,7 +91,18 @@ public class AssetFormDaoImp implements AssetFormDao {
 				return false;
 			}
 	}
+	@Override
+	public boolean delete(String requestId) {
+		AssetForm af = forms.remove(requestId);
+		if (af != null) {
+			return true;
+		}
+		else {
+	    	return false;
+	    }
+	}
 	
+	@Override
 	public AssetForm read(int requestId)throws ReadOperationFailed {
 		AssetForm a = forms.get(requestId);
 		if(a != null) {
@@ -89,5 +114,13 @@ public class AssetFormDaoImp implements AssetFormDao {
 				throw new ReadOperationFailed(); 
 				
 			}
+	}
+	@Override
+	public void mockData() {
+		this.createAssetForm(new AssetForm("456","Rakesh","Mouse","456Rakesh",LocalDate.parse("2017-10-22"),"Processing"));
+		this.createAssetForm(new AssetForm("457","Rakesh","CPU","457Rakesh",LocalDate.parse("2017-10-22"),"Processing"));
+		this.createAssetForm(new AssetForm("458","Rakesh","Monitor","458Rakesh",LocalDate.parse("2017-10-22"),"Processing"));
+		this.createAssetForm(new AssetForm("459","Rakesh","Mouse","459Rakesh",LocalDate.parse("2017-10-22"),"Processing"));
+		
 	}
 }
