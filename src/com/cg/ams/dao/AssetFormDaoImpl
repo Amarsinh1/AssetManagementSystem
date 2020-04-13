@@ -1,0 +1,17 @@
+class AssetFormDaoImpl{
+	private static HashMap<String, AssetForm>forms = new HashMap<String, AssetForm>();
+	@Override
+	public ArrayList<AssetForm> readAssetforms() {
+		List<AssetForm> result = forms.values().stream().collect(Collections.toList()); 
+		return new ArrayList<AssetForm>(result);
+	}
+	
+	public int update(AssetForm form){
+		AssetForm result=users.putIfAbsent(form.getRequestId(), form);
+	    return form.getRequestId;
+	}
+	public String checkStatusDao(int assetRequestId){
+		AssetForm a = forms.get(assetRequestId);
+		return a.getStatus();
+	}
+}
